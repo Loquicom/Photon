@@ -26,7 +26,7 @@
           "platforms": ["windows"],
           "config": {
             "name": "Photon",
-            "ignore": ["out", "tmp", "app", ".idea"]
+            "ignore": ["out", "tmp", ".idea"]
           }
         },
         {
