@@ -33,6 +33,10 @@ async function main() {
     const php = await check.php();
     // Find port for the servers
     [phpPort, nodePort] = await check.port(2);
+    share.port = {
+        php: phpPort,
+        node: nodePort
+    };
     // Launch PHP server
     phpServ = spawn('php', ['-S', `localhost:${phpPort}`, '-t', `${__dirname}/../app/`, `${__dirname}/php/router.php`]);
     // Generate json to share data with php
