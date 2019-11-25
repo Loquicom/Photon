@@ -88,4 +88,5 @@ typings/
 # Electron-Forge
 out/
 
+.idea/
 app/*.php
