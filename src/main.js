@@ -1,5 +1,6 @@
 const {app, BrowserView, BrowserWindow} = require('electron');
 const {spawn} = require('child_process');
+const randomString = require('randomstring');
 const check = require('./check');
 const file = require('./lib/file');
 const config = require('../config');
@@ -10,7 +11,7 @@ if (require('electron-squirrel-startup')) {
 }
 
 // Create tmp dir
-file.makedir('tmp');
+file.makedir(`${__dirname}/../tmp/`);
 
 // Main window
 let mainWindow;
@@ -22,6 +23,10 @@ let nodeServ;
 let phpPort;
 // Node server port
 let nodePort;
+// Shared json with php
+const share = {
+    token: randomString.generate()
+};
 
 async function main() {
     // Check if PHP exist and get the version
@@ -30,6 +35,14 @@ async function main() {
     [phpPort, nodePort] = await check.port(2);
     // Launch PHP server
     phpServ = spawn('php', ['-S', `localhost:${phpPort}`, '-t', `${__dirname}/../app/`, `${__dirname}/php/router.php`]);
+    // Generate json to share data with php
+    file.put(`${__dirname}/../tmp/share.json`, JSON.stringify(share));
+    // If in dev mode
+    if (process.argv.indexOf('dev') !== -1) {
+        const url = `http://localhost:${phpPort}?__photon_token=${share.token};`;
+        console.log(url);
+        spawn('sensible-browser', [url]);
+    }
     // Create window
     createWindow();
 }
@@ -45,16 +58,11 @@ function createWindow() {
     });
     // and load the index.html of the app.
     mainWindow.loadFile(`${__dirname}/index.html`);
-    // Open the DevTools.
-    console.log(config.devtool, phpPort);
-    if (config.devtool) {
-        mainWindow.webContents.openDevTools();
-    }
     // Call the php server
     let view = new BrowserView();
-    //mainWindow.setBrowserView(view);
+    mainWindow.setBrowserView(view);
     view.setBounds({x: 0, y: 0, width: 800, height: 600});
-    view.webContents.loadURL(`http://localhost:${phpPort}`);
+    view.webContents.loadURL(`http://localhost:${phpPort}?__photon_token=${share.token}`);
     view.setAutoResize({
         width: true,
         height: true
