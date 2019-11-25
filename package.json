@@ -23,25 +23,42 @@
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
-          "platforms": ["windows"],
+          "platforms": [
+            "windows"
+          ],
           "config": {
             "name": "Photon",
-            "ignore": ["out", "tmp", ".idea"]
+            "ignore": [
+              "out",
+              "tmp",
+              ".idea"
+            ]
           }
         },
         {
           "name": "@electron-forge/maker-deb",
-          "platforms": ["linux"],
+          "platforms": [
+            "linux"
+          ],
           "config": {
             "name": "Photon",
-            "ignore": ["out", "tmp", ".idea"]
+            "ignore": [
+              "out",
+              "tmp",
+              ".idea"
+            ]
           }
         },
         {
           "name": "@electron-forge/maker-zip",
           "config": {
             "name": "Photon",
-            "ignore": ["out", "tmp", "app", ".idea"]
+            "ignore": [
+              "out",
+              "tmp",
+              "app",
+              ".idea"
+            ]
           }
         }
       ]
@@ -49,6 +66,7 @@
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",
+    "express": "^4.17.1",
     "portfinder": "^1.0.25"
   },
   "devDependencies": {
