@@ -39,9 +39,13 @@ async function main() {
     file.put(`${__dirname}/../tmp/share.json`, JSON.stringify(share));
     // If in dev mode
     if (process.argv.indexOf('dev') !== -1) {
-        const url = `http://localhost:${phpPort}?__photon_token=${share.token};`;
-        console.log(url);
+        const url = `http://localhost:${phpPort}?__photon_token=${share.token}`;
+        console.log('Application URL (open in web browser):', url);
         spawn('sensible-browser', [url]);
+    }
+    // If browsers are allowed to navigate on the application
+    else if (config.browser) {
+        console.info('Application URL:', `http://localhost:${phpPort}`);
     }
     // Create window
     createWindow();
