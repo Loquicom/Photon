@@ -30,7 +30,7 @@ async function main() {
   pf.basePort = phpPort++;
   nodePort = await pf.getPortPromise();
   // Launch PHP server
-  phpServ = spawn('php', ['-S', `localhost:${phpPort}`, '-t', 'app/', `${__dirname}/php/router.php`]);
+  phpServ = spawn('php', ['-S', `localhost:${phpPort}`, '-t', `${__dirname}/../app/`, `${__dirname}/php/router.php`]);
   // Create window
   createWindow();
 };
