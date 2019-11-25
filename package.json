@@ -23,12 +23,26 @@
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
+          "platforms": ["windows"],
           "config": {
-            "name": "photon"
+            "name": "Photon",
+            "ignore": ["out", "tmp", "app", ".idea"]
           }
         },
         {
-          "name": "@electron-forge/maker-zip"
+          "name": "@electron-forge/maker-deb",
+          "platforms": ["linux"],
+          "config": {
+            "name": "Photon",
+            "ignore": ["out", "tmp", ".idea"]
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "config": {
+            "name": "Photon",
+            "ignore": ["out", "tmp", "app", ".idea"]
+          }
         }
       ]
     }
