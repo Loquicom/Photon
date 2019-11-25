@@ -23,8 +23,8 @@ if(!$config->browser) {
 
     // If no token find
     if($token !== $share->token) {
-        header('"HTTP/1.0 403 Forbidden"');
-        return true;
+        header('HTTP/1.0 403 Forbidden');
+        exit('<h1>403 Forbidden</h1>');
     }
     
     // Add cookie if is not set
