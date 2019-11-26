@@ -9,21 +9,22 @@ $share = json_decode($json);
 
 // If browser are not allowed, block connexion from unauthorized source
 if(!$config->browser) {
-    // Search token in cookie
     $token = null;
     $cookie = true;
-    if(isset($_COOKIE['__photon_token'])) {
-        $token = $_COOKIE['__photon_token'];
-    }
-    // Search cookien in get parameter
-    else if(isset($_GET['__photon_token'])) {
+    // Search token in get parameter
+    if(isset($_GET['__photon_token'])) {
         $token = $_GET['__photon_token'];
         $cookie = false;
+    }
+    // Search token in cookie
+    else if(isset($_COOKIE['__photon_token'])) {
+        $token = $_COOKIE['__photon_token'];
     }
 
     // If no token find
     if($token !== $share->token) {
         header('HTTP/1.0 403 Forbidden');
+        echo $token;
         exit('<h1>403 Forbidden</h1>');
     }
     
