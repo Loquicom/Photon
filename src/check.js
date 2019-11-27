@@ -17,8 +17,9 @@ async function getPhpVer(path = '') {
 
 module.exports.php = async function (localpath = './') {
     let ver;
-    if (file.exist(localpath + 'bin/php/php')) {
-        ver = await getPhpVer(localpath + 'bin/php/php');
+    if (file.exist(localpath + 'bin/php')) {
+        const exe = process.platform === 'win32' ? 'php.exe' : 'php';
+        ver = await getPhpVer(localpath + 'bin/php/' + exe);
         if (ver) {
             return {
                 'version': ver,
