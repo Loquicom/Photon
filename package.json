@@ -7,6 +7,7 @@
   "scripts": {
     "start": "electron-forge start",
     "dev": "electron-forge start -- dev",
+    "ver": "electron-forge start -- -v",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",

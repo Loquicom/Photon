@@ -31,6 +31,21 @@ const share = {
 async function main() {
     // Check if PHP exist and get the version
     const php = await check.php();
+    // If php is not found
+    if (php === undefined) {
+        console.info('PHP not found');
+        process.exit();
+    }
+    // If param to show version
+    if (process.argv.indexOf('-v') !== -1 || process.argv.indexOf('--version') !== -1) {
+        console.info('Photon version: 1.0.0');
+        console.info('Electron version:', process.versions.electron);
+        console.info('Node version:', process.versions.node);
+        console.info('Chromium version:', process.versions.chrome);
+        console.info('PHP version:', php.version);
+        console.info('PHP is ' + (php.local ? '' : 'not ') + 'installed locally in the project');
+        process.exit();
+    }
     // Find port for the servers
     [phpPort, nodePort] = await check.port(2);
     share.port = {
@@ -65,10 +80,10 @@ function createWindow() {
         }
     });
     // and load the index.html of the app.
-    mainWindow.loadFile(`${__dirname}/index.html`);
+    mainWindow.loadFile(`${__dirname}/view/index.html`);
     // Call the php server
     let view = new BrowserView();
-    mainWindow.setBrowserView(view);
+    //mainWindow.setBrowserView(view);
     view.setBounds({x: 0, y: 0, width: 800, height: 600});
     view.webContents.loadURL(`http://localhost:${phpPort}?__photon_token=${share.token}`);
     view.setAutoResize({
