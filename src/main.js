@@ -80,10 +80,10 @@ function createWindow() {
         }
     });
     // and load the index.html of the app.
-    mainWindow.loadFile(`${__dirname}/view/index.html`);
+    mainWindow.loadFile(`${__dirname}/view/loader.html`);
     // Call the php server
     let view = new BrowserView();
-    //mainWindow.setBrowserView(view);
+    mainWindow.setBrowserView(view);
     view.setBounds({x: 0, y: 0, width: 800, height: 600});
     view.webContents.loadURL(`http://localhost:${phpPort}?__photon_token=${share.token}`);
     view.setAutoResize({
