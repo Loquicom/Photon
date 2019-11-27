@@ -92,3 +92,4 @@ out/
 app/*.php
 out/
 tmp/
+bin/
