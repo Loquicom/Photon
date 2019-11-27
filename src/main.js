@@ -84,7 +84,7 @@ function createWindow() {
     // Call the php server
     let view = new BrowserView();
     mainWindow.setBrowserView(view);
-    view.setBounds({x: 0, y: 0, width: 800, height: 600});
+    view.setBounds({x: 0, y: 0, width: config.window.width, height: config.window.height});
     view.webContents.loadURL(`http://localhost:${phpPort}?__photon_token=${share.token}`);
     view.setAutoResize({
         width: true,
