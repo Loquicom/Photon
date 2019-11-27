@@ -1,6 +1,7 @@
 const {exec} = require('child_process');
 const pf = require('portfinder');
 const file = require('./lib/file');
+const platform = require('./platform');
 
 async function getPhpVer(path = '') {
     return new Promise(resolve => {
@@ -18,9 +19,8 @@ async function getPhpVer(path = '') {
 module.exports.php = async function (localpath = './') {
     let ver;
     if (file.exist(localpath + 'bin/php')) {
-        const exe = process.platform === 'win32' ? 'php.exe' : 'php';
-        ver = await getPhpVer(localpath + 'bin/php/' + exe);
-        if (ver) {
+        ver = await getPhpVer(localpath + 'bin/php/');
+        if (ver !== undefined) {
             return {
                 'version': ver,
                 'local': true
