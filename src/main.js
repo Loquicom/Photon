@@ -68,7 +68,7 @@ async function main() {
     file.put(`${__dirname}/../tmp/share.json`, JSON.stringify(share));
     // If in dev mode
     if (process.argv.indexOf('dev') !== -1) {
-        const url = `"http://localhost:${phpPort}?__photon_token=${share.token}"`;
+        const url = `http://localhost:${phpPort}?__photon_token=${share.token}`;
         console.log('Application URL (open in web browser):', url);
         spawn(platform.cli.browser, [url]);
     }
