@@ -1,5 +1,5 @@
 const {app, BrowserView, BrowserWindow} = require('electron');
-const {spawn} = require('child_process');
+const {spawn, exec} = require('child_process');
 const randomString = require('randomstring');
 const platform = require('./platform');
 const check = require('./check');
@@ -70,7 +70,11 @@ async function main() {
     if (process.argv.indexOf('dev') !== -1) {
         const url = `http://localhost:${phpPort}?__photon_token=${share.token}`;
         console.log('Application URL (open in web browser):', url);
-        spawn(platform.cli.browser, [url]);
+        exec(`${platform.cli.browser} ${url}`, (err) => {
+            if(err) {
+                console.error('Unable to open link in the web browser');
+            }
+        });
     }
     // If browsers are allowed to navigate on the application
     else if (config.browser) {
