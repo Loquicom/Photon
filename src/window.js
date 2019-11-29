@@ -36,7 +36,7 @@ window.loader = function () {
     return window.new(html);
 }
 
-window.view = function (win, url) {
+window.view = function (win, url, background = null) {
     const view = new BrowserView();
     win.setBrowserView(view);
     view.setBounds({x: 0, y: 0, width: config.window.width, height: config.window.height});
@@ -45,11 +45,14 @@ window.view = function (win, url) {
         width: true,
         height: true
     });
+    if(background) {
+        view.setBackgroundColor(background);
+    }
     return view;
 }
 
 window.phpView = function (win, phpPort, token) {
-    return window.view(win, `http://localhost:${phpPort}?__photon_token=${token}`);
+    return window.view(win, `http://localhost:${phpPort}?__photon_token=${token}`, '#ffff');
 }
 
 module.exports = window;
