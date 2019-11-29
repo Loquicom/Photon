@@ -2,7 +2,8 @@
   "window": {
     "title": "Photon Alpha",
     "width": 1200,
-    "height": 750
+    "height": 750,
+    "loader": false
   },
   "browser": false
 }

@@ -93,8 +93,12 @@ function createWindow() {
             nodeIntegration: true
         }
     });
-    // and load the index.html of the app.
-    mainWindow.loadFile(`${__dirname}/view/loader.html`);
+    // Load the html of the app.
+    if(config.window.loader) {
+        mainWindow.loadFile(`${__dirname}/view/loader.html`);
+    } else {
+        mainWindow.loadFile(`${__dirname}/view/blank.html`);
+    }
     // Call the php server
     let view = new BrowserView();
     mainWindow.setBrowserView(view);
