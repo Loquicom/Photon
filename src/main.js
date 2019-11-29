@@ -67,7 +67,7 @@ async function main() {
         node: nodePort
     };
     // Launch PHP server
-    phpServ = spawn(php, ['-S', `localhost:${phpPort}`, '-t', `${root}app/`, `${__dirname}/php/router.php`]);
+    phpServ = spawn(php, ['-S', `localhost:${phpPort}`, '-t', `${root}app/`, `${__dirname}/php/controller.php`]);
     // Generate json to share data with php
     file.put(`${__dirname}/../tmp/share.json`, JSON.stringify(share));
     // If in dev mode
