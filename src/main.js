@@ -94,8 +94,20 @@ function createWindow() {
         }
     });
     // Load the html of the app.
-    if(config.window.loader) {
-        mainWindow.loadFile(`${__dirname}/view/loader.html`);
+    if(config.window.loader.active) {
+        let loader = `${__dirname}/view/loader.html`;
+        if(config.window.loader.custom) {
+            if(file.exist(config.window.loader.custom)) {
+                loader = config.window.loader.custom;
+            } else if (file.exist(__dirname + config.window.loader.custom)) {
+                loader = __dirname + config.window.loader.custom;
+            } else if (file.exist(__dirname + '/' + config.window.loader.custom)) {
+                loader = __dirname + '/' + config.window.loader.custom;
+            } else {
+                console.error('Unable to find custom loader');
+            }
+        }
+        mainWindow.loadFile(loader);
     } else {
         mainWindow.loadFile(`${__dirname}/view/blank.html`);
     }

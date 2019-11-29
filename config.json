@@ -3,7 +3,10 @@
     "title": "Photon Alpha",
     "width": 1200,
     "height": 750,
-    "loader": false
+    "loader": {
+      "active": true,
+      "custom": ""
+    }
   },
   "browser": false
 }
