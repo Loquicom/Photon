@@ -1,9 +1,10 @@
-const {app, BrowserView, BrowserWindow} = require('electron');
+const {app} = require('electron');
 const {spawn, exec} = require('child_process');
 const randomString = require('randomstring');
+const file = require('./lib/file');
 const platform = require('./platform');
 const check = require('./check');
-const file = require('./lib/file');
+const window = require('./window');
 const config = require('../config');
 
 // Action when install/uninstall on Windows
@@ -86,50 +87,12 @@ async function main() {
     }
     // Create window
     if(!serv) {
-        createWindow();
+        mainWindow = window.loader();
+        window.phpView(mainWindow, phpPort, share.token);
+        mainWindow.on('closed', () => {
+            mainWindow = null;
+        });
     } 
-}
-
-function createWindow() {
-    // Create the browser window.
-    mainWindow = new BrowserWindow({
-        width: config.window.width,
-        height: config.window.height,
-        webPreferences: {
-            nodeIntegration: true
-        }
-    });
-    // Load the html of the app.
-    if(config.window.loader.active) {
-        let loader = `${__dirname}/view/loader.html`;
-        if(config.window.loader.custom) {
-            if(file.exist(config.window.loader.custom)) {
-                loader = config.window.loader.custom;
-            } else if (file.exist(__dirname + config.window.loader.custom)) {
-                loader = __dirname + config.window.loader.custom;
-            } else if (file.exist(__dirname + '/' + config.window.loader.custom)) {
-                loader = __dirname + '/' + config.window.loader.custom;
-            } else {
-                console.error('Unable to find custom loader');
-            }
-        }
-        mainWindow.loadFile(loader);
-    } else {
-        mainWindow.loadFile(`${__dirname}/view/blank.html`);
-    }
-    // Call the php server
-    let view = new BrowserView();
-    mainWindow.setBrowserView(view);
-    view.setBounds({x: 0, y: 0, width: config.window.width, height: config.window.height});
-    view.webContents.loadURL(`http://localhost:${phpPort}?__photon_token=${share.token}`);
-    view.setAutoResize({
-        width: true,
-        height: true
-    });
-
-    mainWindow.on('closed', () => {
-        mainWindow = null;
-    });
 }
 
 // App actions
