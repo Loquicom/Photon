@@ -4,6 +4,7 @@ const randomString = require('randomstring');
 const file = require('./lib/file');
 const platform = require('./platform');
 const check = require('./check');
+const server = require('./server');
 const window = require('./window');
 const config = require('../config');
 
@@ -67,8 +68,9 @@ async function main() {
         php: phpPort,
         node: nodePort
     };
-    // Launch PHP server
+    // Launch PHP an node server
     phpServ = spawn(php, ['-S', `localhost:${phpPort}`, '-t', `${root}app/`, `${__dirname}/php/controller.php`]);
+    nodeServ = server.start(nodePort);
     // Generate json to share data with php
     file.put(`${__dirname}/../tmp/share.json`, JSON.stringify(share));
     // If in dev mode
