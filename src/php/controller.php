@@ -1,11 +1,11 @@
 <?php
 
 // Read JSON files
-$json = file_get_contents(__DIR__ . '/../../config.json');
-$config = json_decode($json);
+$jsonConfig = file_get_contents(__DIR__ . '/../../config.json');
+$config = json_decode($jsonConfig);
 
-$json = file_get_contents(__DIR__ . '/../../tmp/share.json');
-$share = json_decode($json);
+$jsonShare = file_get_contents(__DIR__ . '/../../tmp/share.json');
+$share = json_decode($jsonShare);
 
 // If browser are not allowed, block connexion from unauthorized source
 if(!$config->browser) {
@@ -33,5 +33,9 @@ if(!$config->browser) {
         setcookie('__photon_token', $share->token);
     }
 }
+
+// Create global variables
+global $_PHOTON;
+$_PHOTON = json_decode($jsonShare, true);
 
 return false;
