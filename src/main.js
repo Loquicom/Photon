@@ -13,6 +13,9 @@ if (require('electron-squirrel-startup')) {
 
 // Constant
 const root = `${__dirname}/../`;
+const version = process.argv.indexOf('-v') !== -1 || process.argv.indexOf('--version') !== -1;
+const serv = process.argv.indexOf('serv') !== -1;
+const dev = process.argv.indexOf('dev') !== -1 || serv;
 
 // Create tmp dir
 file.makedir(`${root}tmp/`);
@@ -46,7 +49,7 @@ async function main() {
     // PHP local or global
     php = phpInfo.local ? `${root}bin/php/php` : 'php';
     // If param to show version
-    if (process.argv.indexOf('-v') !== -1 || process.argv.indexOf('--version') !== -1) {
+    if (version) {
         console.info('Photon version: 1.0.0');
         console.info('Electron version:', process.versions.electron);
         console.info('Node version:', process.versions.node);
@@ -67,7 +70,7 @@ async function main() {
     // Generate json to share data with php
     file.put(`${__dirname}/../tmp/share.json`, JSON.stringify(share));
     // If in dev mode
-    if (process.argv.indexOf('dev') !== -1) {
+    if (dev) {
         const url = `http://localhost:${phpPort}?__photon_token=${share.token}`;
         console.log('Application URL (open in web browser):', url);
         exec(`${platform.cli.browser} ${url}`, (err) => {
@@ -81,7 +84,9 @@ async function main() {
         console.info('Application URL:', `http://localhost:${phpPort}`);
     }
     // Create window
-    createWindow();
+    if(!serv) {
+        createWindow();
+    } 
 }
 
 function createWindow() {
@@ -126,6 +131,7 @@ function createWindow() {
     });
 }
 
+// App actions
 app.on('ready', main);
 app.on('window-all-closed', () => {
     spawn(platform.cli.kill.cmd, [platform.cli.kill.arg , phpServ.pid]);
