@@ -12,6 +12,7 @@ if (require('electron-squirrel-startup')) {
 }
 
 // Constant
+const photonVersion = '0.0.1';
 const root = `${__dirname}/../`;
 const version = process.argv.indexOf('-v') !== -1 || process.argv.indexOf('--version') !== -1;
 const serv = process.argv.indexOf('serv') !== -1;
@@ -50,7 +51,7 @@ async function main() {
     php = phpInfo.local ? `${root}bin/php/php` : 'php';
     // If param to show version
     if (version) {
-        console.info('Photon version: 1.0.0');
+        console.info('Photon version:', photonVersion);
         console.info('Electron version:', process.versions.electron);
         console.info('Node version:', process.versions.node);
         console.info('Chromium version:', process.versions.chrome);
