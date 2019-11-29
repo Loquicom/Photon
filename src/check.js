@@ -1,7 +1,6 @@
 const {exec} = require('child_process');
 const pf = require('portfinder');
 const file = require('./lib/file');
-const platform = require('./platform');
 
 async function getPhpVer(path = '') {
     return new Promise(resolve => {
