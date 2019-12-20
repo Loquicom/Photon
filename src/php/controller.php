@@ -38,4 +38,8 @@ if(!$config->browser) {
 global $_PHOTON;
 $_PHOTON = json_decode($jsonShare, true);
 
+// Load Photon class and function
+require 'function.php';
+require 'photon.php';
+
 return false;

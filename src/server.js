@@ -1,11 +1,11 @@
-const {dialog} = require('electron');
 const express = require('express');
 const server = express();
 
-server.get('/', function (req, res) {
-    dialog.showErrorBox('Title', 'Content');
-    res.send('Ok');
-});
+// Read JSON in the request of the body
+server.use(express.json());
+
+// Loading all entry point
+require('./entry/dialog').setup(server);
 
 module.exports.start = function (port) {
     server.listen(port);
