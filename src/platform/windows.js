@@ -3,7 +3,6 @@ module.exports = {
         kill: {
             cmd: 'taskkill',
             arg: '/PID'
-        },
-        browser: 'start'
+        }
     }
 }

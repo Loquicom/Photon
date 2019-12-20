@@ -3,7 +3,6 @@ module.exports = {
         kill: {
             cmd: 'kill',
             arg: '-9'
-        },
-        browser: 'sensible-browser'
+        }
     }
 }
