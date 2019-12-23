@@ -5,7 +5,7 @@ const server = express();
 server.use(express.json());
 
 // Loading all entry point
-require('./entry/dialog').setup(server);
+require('./server/dialog').setup(server);
 
 module.exports.start = function (port) {
     server.listen(port);
