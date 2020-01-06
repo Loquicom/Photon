@@ -6,6 +6,56 @@ function path(path = '') {
     return func.path(PATH, path);
 }
 
+/**
+ * 
+ * @param {*} type 
+ * @param {*} options Object: 
+ *  - title (String): Title for the dialog
+ *  - message (string): Messge to show in the dialog
+ *  - buttons (Array): 1 to n buttons to show
+ *  - checkbox (Object optional): two attribute label (String), the name and check (Boolean), the default value
+ *  - default (String|int optional): Default button selected (name or index)
+ *  - cancel (String|int optional): Default cancel button (name or index)
+ * @param {*} callback 
+ */
+function openDialog(type, options, callback) {
+    const opts = {
+        'type': type,
+        'title': options.title,
+        'message': options.message,
+        'buttons': options.buttons
+    }
+    // Add optional parameter
+    let checkbox = false;
+    if (options.checkbox !== undefined && options.checkbox.label !== undefined && options.checkbox.check !== undefined) {
+        opts.checkboxLabel = options.checkbox.label;
+        opts.checkboxChecked = options.checkbox.check;
+        checkbox = true;
+    }
+    if (options.default !== undefined) {
+        opts.defaultId = options.buttons.indexOf(options.default);
+        if (opts.defaultId === -1) {
+            opts.defaultId = options.default;
+        }
+    }
+    if (options.cancel !== undefined) {
+        console.log(options.cancel);
+        opts.cancelId = options.buttons.indexOf(options.cancel);
+        if (opts.cancelId === -1) {
+            opts.cancelId = options.default;
+        }
+    }
+    // Show dialog
+    console.log(opts);
+    dialog.showMessageBox(opts).then(result => {
+        const res = {success: true, index: result.response, result: options.buttons[result.response]};
+        if (checkbox) {
+            res.checkbox = result.checkboxChecked;
+        }
+        callback(res);
+    });
+}
+
 module.exports.setup = function(server) {
 
     server.use(path("/error"), [func.verify, (req, res) => {
@@ -13,14 +63,8 @@ module.exports.setup = function(server) {
             res.json({success: false, error: 'title and/or message missing'});
         } else {
             if (req.body.buttons !== undefined && Array.isArray(req.body.buttons)) {
-                const options = {
-                    'type': 'error',
-                    'title': req.body.title,
-                    'message': req.body.message,
-                    'buttons': req.body.buttons
-                }
-                dialog.showMessageBox(options).then(index => {
-                    res.json({success: true, index: index, result: req.body.buttons[index.response]});
+                openDialog('error', req.body, (result) => {
+                    res.json(result);
                 });
             } else {
                 dialog.showErrorBox(req.body.title, req.body.message);
@@ -35,14 +79,8 @@ module.exports.setup = function(server) {
         } else if (!Array.isArray(req.body.buttons)) {
             res.json({success: false, error: 'buttons must be an array'})
         } else {
-            const options = {
-                'type': 'info',
-                'title': req.body.title,
-                'message': req.body.message,
-                'buttons': req.body.buttons
-            }
-            dialog.showMessageBox(options).then(index => {
-                res.json({success: true, index: index, result: req.body.buttons[index.response]});
+            openDialog('info', req.body, (result) => {
+                res.json(result);
             });
         }
     }]);
@@ -53,14 +91,8 @@ module.exports.setup = function(server) {
         } else if (!Array.isArray(req.body.buttons)) {
             res.json({success: false, error: 'buttons must be an array'})
         } else {
-            const options = {
-                'type': 'question',
-                'title': req.body.title,
-                'message': req.body.message,
-                'buttons': req.body.buttons
-            }
-            dialog.showMessageBox(options).then(index => {
-                res.json({success: true, index: index, result: req.body.buttons[index.response]});
+            openDialog('question', req.body, (result) => {
+                res.json(result);
             });
         }
     }]);
@@ -71,14 +103,8 @@ module.exports.setup = function(server) {
         } else if (!Array.isArray(req.body.buttons)) {
             res.json({success: false, error: 'buttons must be an array'})
         } else {
-            const options = {
-                'type': 'warning',
-                'title': req.body.title,
-                'message': req.body.message,
-                'buttons': req.body.buttons
-            }
-            dialog.showMessageBox(options).then(index => {
-                res.json({success: true, index: index, result: req.body.buttons[index.response]});
+            openDialog('warning', req.body, (result) => {
+                res.json(result);
             });
         }
     }]);
