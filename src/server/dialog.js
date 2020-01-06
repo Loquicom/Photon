@@ -39,14 +39,12 @@ function openDialog(type, options, callback) {
         }
     }
     if (options.cancel !== undefined) {
-        console.log(options.cancel);
         opts.cancelId = options.buttons.indexOf(options.cancel);
         if (opts.cancelId === -1) {
             opts.cancelId = options.default;
         }
     }
     // Show dialog
-    console.log(opts);
     dialog.showMessageBox(opts).then(result => {
         const res = {success: true, index: result.response, result: options.buttons[result.response]};
         if (checkbox) {
