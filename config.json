@@ -4,7 +4,7 @@
     "width": 1200,
     "height": 750,
     "loader": {
-      "active": true,
+      "active": false,
       "custom": ""
     }
   },

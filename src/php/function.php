@@ -48,7 +48,7 @@ function http_request($method, $url, $params = [], $json = true, $isJson = true)
 }
 
 function parse_json($data) {
-    $result = json_decode($result);
+    $result = json_decode($data);
     if ($result !== false) {
         return $result;
     }
