@@ -34,12 +34,22 @@ if(!$config->browser) {
     }
 }
 
+// Load Photon class and function
+require 'logger.php';
+require 'error.php';
+require 'constant.php';
+require 'function.php';
+require 'photon.php';
+
+// Load error manager
+$logger = new Logger('Photon', $_PHOTON['root'] . 'log/photon-' . date('Y-m-d'));
+PhotonError::set_logger($logger);
+$error = PhotonError::get_instance();
+
 // Create global variables
 global $_PHOTON;
 $_PHOTON = json_decode($jsonShare, true);
-
-// Load Photon class and function
-require 'function.php';
-require 'photon.php';
+global $photon;
+$photon = new Photon($_PHOTON);
 
 return false;
