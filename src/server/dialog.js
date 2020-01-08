@@ -73,7 +73,7 @@ module.exports.setup = function(server) {
 
     server.use(path("/information"), [func.verify, (req, res) => {
         if (req.body.title === undefined || req.body.message === undefined || req.body.buttons === undefined) {
-            res.json({success: false, error: 'title and/or message missing'});
+            res.json({success: false, error: 'title, message or buttons missing'});
         } else if (!Array.isArray(req.body.buttons)) {
             res.json({success: false, error: 'buttons must be an array'})
         } else {
@@ -85,7 +85,7 @@ module.exports.setup = function(server) {
 
     server.use(path("/question"), [func.verify, (req, res) => {
         if (req.body.title === undefined || req.body.message === undefined || req.body.buttons === undefined) {
-            res.json({success: false, error: 'title and/or message missing'});
+            res.json({success: false, error: 'title, message or buttons missing'});
         } else if (!Array.isArray(req.body.buttons)) {
             res.json({success: false, error: 'buttons must be an array'})
         } else {
@@ -97,7 +97,7 @@ module.exports.setup = function(server) {
 
     server.use(path("/warning"), [func.verify, (req, res) => {
         if (req.body.title === undefined || req.body.message === undefined || req.body.buttons === undefined) {
-            res.json({success: false, error: 'title and/or message missing'});
+            res.json({success: false, error: 'title, message or buttons missing'});
         } else if (!Array.isArray(req.body.buttons)) {
             res.json({success: false, error: 'buttons must be an array'})
         } else {
