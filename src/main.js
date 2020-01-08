@@ -37,7 +37,8 @@ let phpPort;
 let nodePort;
 // Shared json with php
 const share = {
-    token: randomString.generate()
+    token: randomString.generate(),
+    root: root
 };
 
 async function main() {
