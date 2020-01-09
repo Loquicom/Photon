@@ -39,8 +39,6 @@ class Dialog {
                 return "question";
             case WARN_DIALOG:
                 return "warning";
-            case CUSTOM_DIALOG:
-                return "custom";
             default:
                 return false;
         }
