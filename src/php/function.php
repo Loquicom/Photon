@@ -1,5 +1,10 @@
 <?php
 
+function get_photon() {
+    global $photon;
+    return $photon;
+}
+
 function get_request($url, $params = [], $json = true, $isJson = true) {
     if (empty($params)) {
         $result = file_get_contents($url);
