@@ -8,6 +8,6 @@
       "custom": ""
     }
   },
-  "browser": false,
+  "webbrowser": false,
   "phperror": true
 }

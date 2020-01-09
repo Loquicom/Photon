@@ -7,8 +7,8 @@ $config = json_decode($jsonConfig);
 $jsonShare = file_get_contents(__DIR__ . '/../../tmp/share.json');
 $share = json_decode($jsonShare);
 
-// If browser are not allowed, block connexion from unauthorized source
-if(!$config->browser) {
+// If web browser are not allowed, block connexion from unauthorized source
+if(!$config->webbrowser) {
     $token = null;
     $cookie = true;
     // Search token in get parameter

@@ -81,7 +81,7 @@ async function main() {
         shell.openExternal(url);
     }
     // If browsers are allowed to navigate on the application
-    else if (config.browser) {
+    else if (config.webbrowser) {
         console.info('Application URL:', `http://localhost:${phpPort}`);
     }
     // Create window
