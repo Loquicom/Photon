@@ -8,16 +8,24 @@ class Dialog {
         $this->parent = $parent;
     }
 
-    public function open(int $type, string $title, string $message, array $buttons) {
+    public function open(int $type, string $title, string $message, array $buttons, string $checkboxLabel = null, $checkboxValue = false, $defaultValue = 0, $cancelValue = 0) {
         $textType = static::constant_to_text($type);
         if ($textType === false) {
+            return false;
+        }
+        if (count($buttons) < 1) {
             return false;
         }
         $options = [
             'title' => $title,
             'message' => $message,
-            'buttons' => $buttons
+            'buttons' => $buttons,
+            'default' => $defaultValue,
+            'cancel' => $cancelValue
         ];
+        if ($checkboxLabel !== null) {
+            $options['checkbox'] = ['label' => $checkboxLabel, 'check' => $checkboxValue];
+        }
         return get_request($this->parent->generate_node_url("dialog/" . static::constant_to_text($type)), $options);
     }
 
