@@ -42,9 +42,12 @@ require 'function.php';
 require 'photon.php';
 
 // Load error manager
-$logger = new Logger('Photon', $_PHOTON['root'] . 'log/photon-' . date('Y-m-d'));
-PhotonError::set_logger($logger);
-$error = PhotonError::get_instance();
+if($config->phperror) {
+    $logger = new Logger('Photon', $share->root . 'log/photon-' . date('Y-m-d'));
+    PhotonError::set_logger($logger);
+    $error = PhotonError::get_instance();
+}
+
 
 // Create global variables
 global $_PHOTON;
