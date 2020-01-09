@@ -8,16 +8,36 @@ class Dialog {
         $this->parent = $parent;
     }
 
-    public function open(int $type, string $title, string $message, array $buttons = null) {
+    public function open(int $type, string $title, string $message, array $buttons) {
+        $textType = static::constant_to_text($type);
+        if ($textType === false) {
+            return false;
+        }
+        $options = [
+            'title' => $title,
+            'message' => $message,
+            'buttons' => $buttons
+        ];
+        return get_request($this->parent->generate_node_url("dialog/" . static::constant_to_text($type)), $options);
+    }
+
+    public function error(string $title, string $message) {
         $options = [
             'title' => $title,
             'message' => $message
         ];
-        if ($buttons !== null && !empty($buttons)) {
-            $options['buttons'] = $buttons;
+        return get_request($this->parent->generate_node_url("dialog/error"), $options);
+    }
+
+    public function custom(string $html) {
+
+    }
+
+    public function custom_file(string $path) {
+        if (!file_exists($path)) {
+            return false;
         }
-        var_dump($this->parent->generate_node_url("dialog/" . static::constant_to_text($type)));
-        return get_request($this->parent->generate_node_url("dialog/" . static::constant_to_text($type)), $options);
+        return $this->custom(file_get_contents($path));
     }
 
     private static function constant_to_text(int $constant) {
